@@ -100,30 +100,28 @@ Normal builds only write `src/FreeFly/bin` and `obj`. `Deploy` copies `FreeFly.d
 
 ## 中文
 
-FreeFly 为 PEAK 增加本地无碰撞自由飞行、临时调速和按关卡更新的传送菜单，可用于寻找队友或前往关卡目的地。
+FreeFly 为 PEAK 增加本地无碰撞飞行、临时速度控制和按关卡管理的传送菜单，可用于寻找队友或前往关卡目的地。
 
-### 功能亮点
+### 功能
 
-- **自由穿行：** 开启无碰撞飞行后，可以在当前关卡中自由移动，不受重力和碰撞影响。
-- **沿用 PEAK 操作：** 水平移动和视角使用游戏当前绑定，跳跃与蹲下分别控制上升和下降。
-- **临时变速：** 按住可配置的加速或减速输入即可临时调整速度，不会改变基础速度。
-- **键盘与手柄均可用：** 支持键盘快捷键和可配置的 Unity Input System 手柄路径；飞行和传送可以使用组合键，也可以改为单键。
-- **按关卡管理目的地：** 菜单会显示当前关卡起点、篝火、终点，以及 Nadir 路线和 PEAK 最终目的地；推进关卡后会自动刷新。
-- **传送到队友：** 可选择存活、昏迷或死亡的队友；死亡队友使用其尸体/观战位置。
-- **兼容多人游戏：** 传送结果会同步给房间内所有玩家，队友无需安装 FreeFly。
+- **自由飞行：** 开启无碰撞飞行后，可以在当前关卡中自由移动，不受重力和碰撞影响。
+- **随时调整速度：** 按住配置的加速或减速输入即可临时应用速度倍率，不会改变基础速度。
+- **支持键盘和手柄：** 支持键盘快捷键和可配置的 Unity Input System 手柄路径；飞行和传送可以使用组合键，也可以使用独立按键。
+- **按关卡管理传送目的地：** 菜单会跟踪当前关卡的起点和终点、篝火、Nadir 路线以及最终 PEAK 目的地，并随着流程推进刷新目的地。
+- **传送到队友：** 可选择存活、昏迷或死亡的队友。
 
 ### 为什么做 FreeFly
 
-FreeFly 是我按照自己的使用习惯实现的飞行模组。[FlyMode](https://thunderstore.io/c/peak/p/Luluberlu/FlyMode/) 已经提供了飞行功能，但我希望下面几件事能更符合实际使用场景：
+FreeFly 是我按照自己的游玩习惯实现的飞行模组。[FlyMode](https://thunderstore.io/c/peak/p/Luluberlu/FlyMode/) 已经存在，但我希望下面几件事能以不同方式工作：
 
-- **速度应该适应不同场景：** 原 Mod 没有临时加速或减速。跨越大范围区域时需要更快的速度，而接近目标、微调位置时又需要更慢的速度。
-- **传送适合和飞行放在一起：** 实际上，使用飞行模组通常就是为了更快找到队友，或者直接前往当前关卡终点。因此我把这些常用目的地集成到了同一个 Mod 和菜单中。
-- **飞行也应该能用来善后：** 传送并不总是稳定，偶尔会把玩家卡在不合适的位置。有了飞行，就可以自己回到正常位置，而不是只能被困在那里。
+- **速度应该适应不同场景：** 原 Mod 没有临时加速或减速控制。跨越大范围区域时，更快的速度很有用；而在小范围内调整位置时，更慢的速度会轻松得多。
+- **传送适合和飞行放在一起：** 实际上，人们通常启用飞行模组，是为了更快找到队友或前往当前关卡终点。这些目的地足够常用，因此我希望把它们放进同一个 Mod 和菜单中。
+- **飞行也可以用来恢复：** 传送并不总是可靠，偶尔会把玩家留在尴尬的位置。有了飞行，就可以回到正常位置，而不是被困在那里。
 
-还有一些在正常使用中不一定马上察觉到的实现差异：
+还有一些在正常游玩中容易忽略的实现细节：
 
-- **稳定的无碰撞效果：** 原 Mod 保留碰撞体，主要通过高速移动来近似实现无碰撞。速度较低时仍可能被墙挡住，而且无论速度如何，仙人掌和陷阱仍可能卡住玩家或造成伤害。FreeFly 在飞行时会关闭角色碰撞体，因此效果不依赖移动速度，飞行过程中也不会受到这些障碍和陷阱影响。
-- **完整恢复状态：** 结束飞行、开始传送、更换角色或卸载 Mod 时，FreeFly 会恢复正常物理状态。
+- **稳定的无碰撞效果：** 原 Mod 保留碰撞体，主要通过高速移动来近似实现无碰撞。速度较低时，墙壁仍可能挡住玩家；仙人掌或陷阱也仍可能卡住玩家或造成伤害。FreeFly 会关闭角色的飞行碰撞体，因此效果不依赖速度，飞行时也不会受到这些危险影响。
+- **完整恢复状态：** 结束飞行、开始传送、角色发生变化或插件卸载时，FreeFly 都会恢复正常物理状态。
 
 ### 安装
 
@@ -136,24 +134,53 @@ FreeFly 是我按照自己的使用习惯实现的飞行模组。[FlyMode](https
 | 切换飞行 | `F6` | `View / Select` + `左肩键`（默认） |
 | 打开传送菜单 | `F7` | `View / Select` + `右肩键`（默认） |
 | 移动 | PEAK 移动绑定 | 左摇杆 |
-| 观察 | PEAK 视角绑定 | 右摇杆 |
+| 视角 | PEAK 视角绑定 | 右摇杆 |
 | 上升 | PEAK 跳跃绑定 | PEAK 跳跃绑定 |
 | 下降 | PEAK 蹲下绑定 | PEAK 蹲下绑定 |
-| 临时加速 | 按住 `Left Shift`（默认） | 按住 `右肩键`（默认） |
-| 临时减速 | 按住 `Left Alt`（默认） | 按住 `左肩键`（默认） |
+| 临时加速 | 按住 `Left Shift`（默认） | 按住 `Right Shoulder`（默认） |
+| 临时减速 | 按住 `Left Alt`（默认） | 按住 `Left Shoulder`（默认） |
 
-在传送菜单中，使用方向键/十字键选择目的地，回车键/`A` 确认传送，Escape/`B` 取消。
+在传送菜单中，使用上/下方向键或十字键选择目的地，回车键/`A` 确认传送，Escape/`B` 取消。
 
-普通关卡会显示当前关卡起点（初始出生点或上一处篝火）和终点篝火；推进关卡后，新目的地会在 PEAK 完成地图生成前保持禁用。Nadir 会按流程显示出生点、Scoutmaster Soul 路标和 The Gate，最终关卡则指向 PEAK 山顶的信号弹位置。传送时会根据可配置偏移，将本地玩家放到目的地的上方和后方。
+普通关卡会显示当前关卡起点（初始出生点或上一处篝火）和终点篝火。新推进的目的地会在 PEAK 生成对应路段时保持禁用。Nadir 会在相关节点出现时显示出生点、Scoutmaster Soul 路标和 The Gate；最终关卡则指向 PEAK 山顶的信号弹位置。选择目的地后，本地玩家会根据可配置偏移出现在目的地的上方和后方。
 
 ### 配置
 
-配置文件生成于 `BepInEx/config/com.github.lllei.FreeFly.cfg`。配置项、默认值和范围见英文表格。手柄路径使用 Unity Input System 格式：将组合键修饰键路径留空可改为单键，将动作路径留空可禁用对应快捷键。非法数值会在运行时钳制或回退到安全值。
+配置文件生成于 `BepInEx/config/com.github.lllei.FreeFly.cfg`。
+
+| 配置项 | 默认值 | 允许范围 |
+|---|---:|---:|
+| `General.Enabled` | `true` | 布尔值 |
+| `Controls.ToggleFlightShortcut` | `F6` | 键盘按键 |
+| `Controls.TeleportMenuShortcut` | `F7` | 键盘按键 |
+| `Controls.ControllerChordModifierPath` | `<Gamepad>/selectButton` | Unity Input System 路径，或留空 |
+| `Controls.ControllerFlightTogglePath` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空 |
+| `Controls.ControllerTeleportMenuTogglePath` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空 |
+| `Controls.SpeedUpShortcut` | `LeftShift` | 键盘按键，或 `None` |
+| `Controls.SlowDownShortcut` | `LeftAlt` | 键盘按键，或 `None` |
+| `Controls.SpeedUpControllerPath` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空/`None` |
+| `Controls.SlowDownControllerPath` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空/`None` |
+| `Movement.BaseSpeed` | `100` m/s | `1` 到 `1000` |
+| `Movement.SpeedUpMultiplier` | `2.0` | `1` 到 `10` |
+| `Movement.SlowDownMultiplier` | `0.2` | `0.05` 到 `1` |
+| `Teleport.VerticalOffset` | `2` m | `0` 到 `10` |
+| `Teleport.BackwardOffset` | `1.5` m | `0` 到 `10` |
+
+手柄路径使用 Unity Input System 格式。将组合键修饰键路径留空可将飞行和传送改为独立按键；将动作路径留空可禁用对应快捷键。非法数值会在运行时钳制或回退到安全默认值。
 
 ### 兼容性说明
 
-FreeFly 编译于 PEAK 2.2.a（Steam build 24801711）和 BepInEx 5.4.75301。只有使用 FreeFly 的玩家需要安装，队友无需安装。
+FreeFly 编译于 PEAK 2.2.a（Steam build 24801711）和 BepInEx 5.4.75301。只有使用 FreeFly 的玩家需要安装。
 
 ### 构建
 
-项目内的 `PeakGameDir.props` 默认指向 Steam 安装目录。其他机器请将 `PeakGameDir.props.example` 复制为 `PeakGameDir.props` 并填写 PEAK 路径，或设置 `PEAK_GAME_DIR`。构建、测试、部署和 Thunderstore 打包命令见英文构建章节。
+项目内的 `PeakGameDir.props` 默认指向标准 Steam 安装目录。其他机器请将 `PeakGameDir.props.example` 复制为 `PeakGameDir.props` 并填写 PEAK 路径，或设置 `PEAK_GAME_DIR`。
+
+```powershell
+dotnet test tests\FreeFly.Core.Tests\FreeFly.Core.Tests.csproj -c Release
+dotnet build FreeFly.sln -c Release
+dotnet msbuild src\FreeFly\FreeFly.csproj -t:Deploy -p:Configuration=Release
+dotnet msbuild src\FreeFly\FreeFly.csproj -t:PackageThunderstore -p:Configuration=Release
+```
+
+普通构建只会写入 `src/FreeFly/bin` 和 `obj`。`Deploy` 会将 `FreeFly.dll` 复制到 `PEAK/BepInEx/plugins/FreeFly`；`PackageThunderstore` 会在检查 manifest 版本后创建 `artifacts/lllei-FreeFly-<version>.zip`。
