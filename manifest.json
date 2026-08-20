@@ -2,7 +2,7 @@
   "name": "FreeFly",
   "version_number": "0.1.0",
   "website_url": "https://github.com/llleixx/FreeFly",
-  "description": "Local free flight and teammate teleport for PEAK.",
+  "description": "FreeFly adds local no-clip flight to PEAK, with temporary speed control and a stage-aware teleport menu for finding teammates or reaching stage destinations.",
   "dependencies": [
     "BepInEx-BepInExPack_PEAK-5.4.75301"
   ]
