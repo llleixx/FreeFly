@@ -5,6 +5,12 @@
 
 [English](#english) | [中文](#中文)
 
+## Preview / 效果展示
+
+| PEAK teleport / PEAK 传送 | Nadir teleport / Nadir 传送 |
+|:---:|:---:|
+| ![PEAK teleport menu](https://raw.githubusercontent.com/llleixx/FreeFly/main/docs/media/peak-teleport.jpg) | ![Nadir teleport menu](https://raw.githubusercontent.com/llleixx/FreeFly/main/docs/media/nadir-teleport.jpg) |
+
 ## English
 
 FreeFly adds local no-clip flight to PEAK, with temporary speed control and a stage-aware teleport menu for finding teammates or reaching stage destinations.
