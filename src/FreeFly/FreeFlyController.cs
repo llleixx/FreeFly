@@ -134,12 +134,6 @@ internal sealed class FreeFlyController
             part.Rig.useGravity = false;
         }
 
-        if (_menuOpen)
-        {
-            ragdoll.HaltBodyVelocity();
-            return;
-        }
-
         Vector3 movementDirection = GetMovementDirection(local);
         float speed = FreeFlyMath.ApplySpeedModifiers(
             _config.SafeBaseSpeed,
@@ -386,21 +380,46 @@ internal sealed class FreeFlyController
 
     private Vector3 GetMovementDirection(Character local)
     {
-        Vector2 input = Vector2.ClampMagnitude(local.input.movementInput, 1f);
+        Vector2 input = GetMovementInput(local);
         Vector3 forward = local.data.lookDirection_Flat;
         Vector3 right = local.data.lookDirection_Right;
         Vector3 up = Vector3.up;
         Vector3 direction = forward * input.y + right * input.x;
         bool chordModifierHeld = ControllerChordModifierHeld();
+        bool jumpHeld = _menuOpen
+            ? IsActionHeld(CharacterInput.action_jump)
+            : local.input.jumpIsPressed;
+        bool crouchHeld = _menuOpen
+            ? IsActionHeld(CharacterInput.action_crouch)
+            : local.input.crouchIsPressed;
         float vertical = chordModifierHeld
             ? 0f
-            : (local.input.jumpIsPressed || ControllerAscendHeld() ? 1f : 0f);
+            : (jumpHeld || ControllerAscendHeld() ? 1f : 0f);
         vertical -= chordModifierHeld
             ? 0f
-            : (local.input.crouchIsPressed || ControllerDescendHeld() ? 1f : 0f);
+            : (crouchHeld || ControllerDescendHeld() ? 1f : 0f);
         direction += up * vertical;
         return Vector3.ClampMagnitude(direction, 1f);
     }
+
+    private Vector2 GetMovementInput(Character local)
+    {
+        if (!_menuOpen)
+            return Vector2.ClampMagnitude(local.input.movementInput, 1f);
+
+        Vector2 input = CharacterInput.action_move?.ReadValue<Vector2>() ?? Vector2.zero;
+        if (IsActionHeld(CharacterInput.action_moveForward))
+            input += Vector2.up;
+        if (IsActionHeld(CharacterInput.action_moveBackward))
+            input -= Vector2.up;
+        if (IsActionHeld(CharacterInput.action_moveRight))
+            input += Vector2.right;
+        if (IsActionHeld(CharacterInput.action_moveLeft))
+            input -= Vector2.right;
+        return Vector2.ClampMagnitude(input, 1f);
+    }
+
+    private static bool IsActionHeld(InputAction? action) => action?.IsPressed() == true;
 
     private void OpenMenu()
     {
