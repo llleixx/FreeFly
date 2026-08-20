@@ -30,6 +30,7 @@
     <Reference Include="Unity.InputSystem" HintPath="$(ManagedDir)\Unity.InputSystem.dll" Private="false" />
     <Reference Include="PhotonUnityNetworking" HintPath="$(ManagedDir)\PhotonUnityNetworking.dll" Private="false" />
     <Reference Include="PhotonRealtime" HintPath="$(ManagedDir)\PhotonRealtime.dll" Private="false" />
+    <Reference Include="Zorro.Core.Runtime" HintPath="$(ManagedDir)\Zorro.Core.Runtime.dll" Private="false" />
   </ItemGroup>
 
   <Target Name="ValidatePeakGameDir" BeforeTargets="ResolveReferences">
