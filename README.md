@@ -21,7 +21,7 @@ F2, F3, and F4 are intentionally unused. All keyboard shortcuts, controller path
 
 `SpeedUpShortcut` and `SlowDownShortcut` configure the keyboard speed modifiers (default: Left Shift and Left Alt). `SpeedUpControllerButton` and `SlowDownControllerButton` configure their controller equivalents (default: Right Shoulder and Left Shoulder). Any of these can be set to `None` to disable that input.
 
-The teleport menu lists current teammates, including passed-out and dead characters. Selecting one moves the local player to a point above and behind that character using PEAK's existing `WarpPlayerRPC`, so all clients see the same result and the game's collision/velocity cleanup remains in control.
+The teleport menu releases the mouse cursor and blocks player movement while open. It lists current teammates, including passed-out and dead characters. Selecting one moves the local player to a point above and behind that character using PEAK's existing `WarpPlayerRPC`, so all clients see the same result and the game's collision/velocity cleanup remains in control.
 
 ## Build
 

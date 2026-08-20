@@ -20,6 +20,9 @@ internal sealed class FreeFlyController
     private InputAction? _controllerFlightToggleAction;
     private InputAction? _controllerTeleportMenuToggleAction;
     private string _controllerBindingSignature = string.Empty;
+    private GameObject? _menuInputBlockerObject;
+    private FreeFlyMenuWindow? _menuInputBlockerWindow;
+    private Vector2 _menuScrollPosition;
     private Character? _flightCharacter;
     private bool _flightActive;
     private bool _menuOpen;
@@ -41,7 +44,7 @@ internal sealed class FreeFlyController
         if (!_config.Enabled.Value || !_capabilities.FlightPatch || local == null || local.data == null)
         {
             StopFlight("feature unavailable");
-            _menuOpen = false;
+            CloseMenu();
             return;
         }
 
@@ -151,34 +154,51 @@ internal sealed class FreeFlyController
             return;
 
         RefreshTargets();
-        float width = Mathf.Min(430f, Screen.width - 32f);
-        float height = Mathf.Min(420f, Screen.height - 32f);
+        float width = Mathf.Min(720f, Screen.width - 40f);
+        float height = Mathf.Min(620f, Screen.height - 40f);
         Rect area = new((Screen.width - width) * 0.5f, (Screen.height - height) * 0.5f, width, height);
-        GUI.Box(area, "FreeFly - Teleport");
-        GUILayout.BeginArea(new Rect(area.x + 14f, area.y + 32f, area.width - 28f, area.height - 46f));
-        GUILayout.Label("Select a teammate. Dead teammates use their corpse position.");
+        GUIStyle boxStyle = new(GUI.skin.box)
+        {
+            fontSize = 28
+        };
+        GUIStyle labelStyle = new(GUI.skin.label)
+        {
+            fontSize = 20,
+            wordWrap = true
+        };
+        GUIStyle buttonStyle = new(GUI.skin.button)
+        {
+            fontSize = 22
+        };
+
+        GUI.Box(area, "FreeFly - Teleport", boxStyle);
+        GUILayout.BeginArea(new Rect(area.x + 24f, area.y + 64f, area.width - 48f, area.height - 88f));
+        GUILayout.Label("Select a teammate. Dead teammates use their corpse position.", labelStyle);
+        GUILayout.Space(12f);
 
         if (_targets.Count == 0)
         {
-            GUILayout.Label("No teammate is available.");
+            GUILayout.Label("No teammate is available.", labelStyle);
         }
         else
         {
+            _menuScrollPosition = GUILayout.BeginScrollView(_menuScrollPosition);
             for (int i = 0; i < _targets.Count; i++)
             {
                 Character target = _targets[i];
                 string state = target.data.dead ? "Dead" : target.data.fullyPassedOut ? "Passed out" : "Alive";
                 string label = $"{(i == _selectedTarget ? "> " : "  ")}{target.characterName} [{state}]";
-                if (GUILayout.Button(label, GUILayout.Height(28f)))
+                if (GUILayout.Button(label, buttonStyle, GUILayout.Height(52f)))
                 {
                     _selectedTarget = i;
                     TeleportToSelected();
                 }
             }
+            GUILayout.EndScrollView();
         }
 
         GUILayout.FlexibleSpace();
-        GUILayout.Label("Up/Down or D-pad: select    Enter/A: teleport    Escape/B: cancel");
+        GUILayout.Label("Up/Down or D-pad: select    Enter/A: teleport    Escape/B: cancel", labelStyle);
         GUILayout.EndArea();
     }
 
@@ -360,12 +380,38 @@ internal sealed class FreeFlyController
     {
         RefreshTargets();
         _selectedTarget = Mathf.Clamp(_selectedTarget, 0, Mathf.Max(0, _targets.Count - 1));
+        _menuScrollPosition = Vector2.zero;
         _menuOpen = true;
+        CreateMenuInputBlocker();
     }
 
     private void CloseMenu()
     {
         _menuOpen = false;
+        DestroyMenuInputBlocker();
+    }
+
+    private void CreateMenuInputBlocker()
+    {
+        if (_menuInputBlockerObject != null)
+            return;
+
+        _menuInputBlockerObject = new GameObject("FreeFly Teleport Menu Input Blocker");
+        _menuInputBlockerWindow = _menuInputBlockerObject.AddComponent<FreeFlyMenuWindow>();
+        if (!MenuWindow.AllActiveWindows.Contains(_menuInputBlockerWindow))
+            MenuWindow.AllActiveWindows.Add(_menuInputBlockerWindow);
+    }
+
+    private void DestroyMenuInputBlocker()
+    {
+        if (_menuInputBlockerWindow != null)
+            MenuWindow.AllActiveWindows.Remove(_menuInputBlockerWindow);
+
+        if (_menuInputBlockerObject != null)
+            UnityEngine.Object.Destroy(_menuInputBlockerObject);
+
+        _menuInputBlockerWindow = null;
+        _menuInputBlockerObject = null;
     }
 
     private void RefreshTargets()
@@ -478,4 +524,9 @@ internal sealed class FreeFlyController
             ? string.Empty
             : normalized;
     }
+}
+
+internal sealed class FreeFlyMenuWindow : MenuWindow
+{
+    public override bool selectOnOpen => false;
 }
