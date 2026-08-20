@@ -786,7 +786,7 @@ internal sealed class FreeFlyController
             Character target = option.Character;
             if (target.data == null)
                 return;
-            position = target.Center;
+            position = target.data.dead ? target.GetSpectatePosition() : target.Center;
             forward = target.transform.forward;
         }
 
