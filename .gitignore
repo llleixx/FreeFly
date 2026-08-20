@@ -1,0 +1,7 @@
+PeakGameDir.props
+bin/
+obj/
+artifacts/
+*.user
+*.suo
+
