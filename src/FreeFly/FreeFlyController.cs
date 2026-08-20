@@ -19,6 +19,8 @@ internal sealed class FreeFlyController
     private InputAction? _controllerChordModifierAction;
     private InputAction? _controllerFlightToggleAction;
     private InputAction? _controllerTeleportMenuToggleAction;
+    private InputAction? _speedUpControllerAction;
+    private InputAction? _slowDownControllerAction;
     private string _controllerBindingSignature = string.Empty;
     private GameObject? _menuInputBlockerObject;
     private FreeFlyMenuWindow? _menuInputBlockerWindow;
@@ -234,7 +236,9 @@ internal sealed class FreeFlyController
         string modifierPath = NormalizeBindingPath(_config.ControllerChordModifierPath.Value);
         string flightPath = NormalizeBindingPath(_config.ControllerFlightTogglePath.Value);
         string menuPath = NormalizeBindingPath(_config.ControllerTeleportMenuTogglePath.Value);
-        string signature = $"{modifierPath}\n{flightPath}\n{menuPath}";
+        string speedUpPath = NormalizeBindingPath(_config.SpeedUpControllerPath.Value);
+        string slowDownPath = NormalizeBindingPath(_config.SlowDownControllerPath.Value);
+        string signature = $"{modifierPath}\n{flightPath}\n{menuPath}\n{speedUpPath}\n{slowDownPath}";
         if (signature == _controllerBindingSignature)
             return;
 
@@ -259,6 +263,22 @@ internal sealed class FreeFlyController
             modifierPath,
             menuPath,
             "teleport menu");
+
+        if (speedUpPath.Length > 0)
+        {
+            _speedUpControllerAction = CreateButtonAction(
+                "FreeFly Controller Speed Up",
+                speedUpPath,
+                "speed-up");
+        }
+
+        if (slowDownPath.Length > 0)
+        {
+            _slowDownControllerAction = CreateButtonAction(
+                "FreeFly Controller Slow Down",
+                slowDownPath,
+                "slow-down");
+        }
     }
 
     private InputAction? CreateToggleAction(string name, string modifierPath, string actionPath, string description)
@@ -311,6 +331,8 @@ internal sealed class FreeFlyController
         DisposeAction(ref _controllerChordModifierAction);
         DisposeAction(ref _controllerFlightToggleAction);
         DisposeAction(ref _controllerTeleportMenuToggleAction);
+        DisposeAction(ref _speedUpControllerAction);
+        DisposeAction(ref _slowDownControllerAction);
     }
 
     private static void DisposeAction(ref InputAction? action)
@@ -394,10 +416,10 @@ internal sealed class FreeFlyController
             : local.input.crouchIsPressed;
         float vertical = chordModifierHeld
             ? 0f
-            : (jumpHeld || ControllerAscendHeld() ? 1f : 0f);
+            : (jumpHeld ? 1f : 0f);
         vertical -= chordModifierHeld
             ? 0f
-            : (crouchHeld || ControllerDescendHeld() ? 1f : 0f);
+            : (crouchHeld ? 1f : 0f);
         direction += up * vertical;
         return Vector3.ClampMagnitude(direction, 1f);
     }
@@ -801,43 +823,19 @@ internal sealed class FreeFlyController
 
     private bool SpeedUpHeld() => IsKeyHeld(_config.SpeedUpShortcut.Value) ||
                                   (!ControllerChordModifierHeld() &&
-                                   ControllerButtonHeld(_config.SpeedUpControllerButton.Value));
+                                   _speedUpControllerAction?.IsPressed() == true);
     private bool SlowDownHeld() => IsKeyHeld(_config.SlowDownShortcut.Value) ||
                                    (!ControllerChordModifierHeld() &&
-                                    ControllerButtonHeld(_config.SlowDownControllerButton.Value));
+                                    _slowDownControllerAction?.IsPressed() == true);
 
     private static bool IsKeyHeld(KeyCode key)
     {
         return key != KeyCode.None && Input.GetKey(key);
     }
 
-    private static bool ControllerButtonHeld(ControllerButton button)
-    {
-        Gamepad? gamepad = Gamepad.current;
-        if (gamepad == null)
-            return false;
-
-        return button switch
-        {
-            ControllerButton.LeftShoulder => gamepad.leftShoulder.isPressed,
-            ControllerButton.RightShoulder => gamepad.rightShoulder.isPressed,
-            ControllerButton.LeftTrigger => gamepad.leftTrigger.isPressed,
-            ControllerButton.RightTrigger => gamepad.rightTrigger.isPressed,
-            ControllerButton.ButtonSouth => gamepad.buttonSouth.isPressed,
-            ControllerButton.ButtonEast => gamepad.buttonEast.isPressed,
-            ControllerButton.ButtonWest => gamepad.buttonWest.isPressed,
-            ControllerButton.ButtonNorth => gamepad.buttonNorth.isPressed,
-            ControllerButton.LeftStickButton => gamepad.leftStickButton.isPressed,
-            ControllerButton.RightStickButton => gamepad.rightStickButton.isPressed,
-            _ => false
-        };
-    }
-
     private bool ControllerChordModifierHeld() => _controllerChordModifierAction?.IsPressed() == true;
     private bool ControllerFlightPressed() => _controllerFlightToggleAction?.WasPressedThisFrame() == true;
     private bool ControllerTeleportMenuPressed() => _controllerTeleportMenuToggleAction?.WasPressedThisFrame() == true;
-    private static bool ControllerAscendHeld() => Gamepad.current?.buttonSouth.isPressed == true;
-    private static bool ControllerDescendHeld() => Gamepad.current?.buttonEast.isPressed == true;
     private static bool ControllerConfirmPressed() => Gamepad.current?.buttonSouth.wasPressedThisFrame == true;
     private static bool ControllerCancelPressed() => Gamepad.current?.buttonEast.wasPressedThisFrame == true;
     private static bool ControllerUpPressed() => Gamepad.current?.dpad.up.wasPressedThisFrame == true;

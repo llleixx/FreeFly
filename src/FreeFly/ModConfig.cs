@@ -3,26 +3,11 @@ using UnityEngine;
 
 namespace FreeFly;
 
-internal enum ControllerButton
-{
-    None,
-    LeftShoulder,
-    RightShoulder,
-    LeftTrigger,
-    RightTrigger,
-    ButtonSouth,
-    ButtonEast,
-    ButtonWest,
-    ButtonNorth,
-    LeftStickButton,
-    RightStickButton
-}
-
 internal sealed class ModConfig
 {
     private const float DefaultBaseSpeed = 100f;
     private const float DefaultSpeedUpMultiplier = 2f;
-    private const float DefaultSlowDownMultiplier = 0.35f;
+    private const float DefaultSlowDownMultiplier = 0.2f;
     private const float DefaultTeleportVerticalOffset = 2f;
     private const float DefaultTeleportBackwardOffset = 1.5f;
 
@@ -47,18 +32,18 @@ internal sealed class ModConfig
             "Keyboard key held to temporarily increase flight speed. Set to None to disable.");
         SlowDownShortcut = config.Bind("Controls", "SlowDownShortcut", KeyCode.LeftAlt,
             "Keyboard key held to temporarily decrease flight speed. Set to None to disable.");
-        SpeedUpControllerButton = config.Bind("Controls", "SpeedUpControllerButton", ControllerButton.RightShoulder,
-            "Controller button held to temporarily increase flight speed. Set to None to disable.");
-        SlowDownControllerButton = config.Bind("Controls", "SlowDownControllerButton", ControllerButton.LeftShoulder,
-            "Controller button held to temporarily decrease flight speed. Set to None to disable.");
+        SpeedUpControllerPath = config.Bind("Controls", "SpeedUpControllerPath", "<Gamepad>/rightShoulder",
+            "Unity Input System path held to temporarily increase flight speed. Leave empty or set to None to disable.");
+        SlowDownControllerPath = config.Bind("Controls", "SlowDownControllerPath", "<Gamepad>/leftShoulder",
+            "Unity Input System path held to temporarily decrease flight speed. Leave empty or set to None to disable.");
         BaseSpeed = config.Bind("Movement", "BaseSpeed", DefaultBaseSpeed,
             new ConfigDescription("Base flight speed in meters per second.",
                 new AcceptableValueRange<float>(1f, 1000f)));
         SpeedUpMultiplier = config.Bind("Movement", "SpeedUpMultiplier", DefaultSpeedUpMultiplier,
-            new ConfigDescription("Multiplier while the configured speed-up key or controller button is held.",
+            new ConfigDescription("Multiplier while the configured speed-up key or controller path is held.",
                 new AcceptableValueRange<float>(1f, 10f)));
         SlowDownMultiplier = config.Bind("Movement", "SlowDownMultiplier", DefaultSlowDownMultiplier,
-            new ConfigDescription("Multiplier while the configured slow-down key or controller button is held.",
+            new ConfigDescription("Multiplier while the configured slow-down key or controller path is held.",
                 new AcceptableValueRange<float>(0.05f, 1f)));
         TeleportVerticalOffset = config.Bind("Teleport", "VerticalOffset", DefaultTeleportVerticalOffset,
             new ConfigDescription("Height above the selected teammate's center when teleporting.",
@@ -76,8 +61,8 @@ internal sealed class ModConfig
     public ConfigEntry<string> ControllerTeleportMenuTogglePath { get; }
     public ConfigEntry<KeyCode> SpeedUpShortcut { get; }
     public ConfigEntry<KeyCode> SlowDownShortcut { get; }
-    public ConfigEntry<ControllerButton> SpeedUpControllerButton { get; }
-    public ConfigEntry<ControllerButton> SlowDownControllerButton { get; }
+    public ConfigEntry<string> SpeedUpControllerPath { get; }
+    public ConfigEntry<string> SlowDownControllerPath { get; }
     public ConfigEntry<float> BaseSpeed { get; }
     public ConfigEntry<float> SpeedUpMultiplier { get; }
     public ConfigEntry<float> SlowDownMultiplier { get; }
