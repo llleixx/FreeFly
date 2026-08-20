@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0
+## 1.0.0
 
 - Added local no-clip flight with PEAK's native movement, look, jump, and crouch inputs.
 - Added temporary speed-up and slow-down modifiers without changing the base flight speed.
