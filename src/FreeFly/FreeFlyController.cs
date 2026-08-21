@@ -12,6 +12,7 @@ internal sealed class FreeFlyController
 {
     private readonly ModConfig _config;
     private readonly ManualLogSource _logger;
+    private readonly FreeFlyNotification _notification;
     private readonly Dictionary<Rigidbody, bool> _originalGravity = new();
     private readonly List<TeleportOption> _teleportOptions = new();
 
@@ -54,10 +55,11 @@ internal sealed class FreeFlyController
         public bool Enabled { get; }
     }
 
-    public FreeFlyController(ModConfig config, ManualLogSource logger)
+    public FreeFlyController(ModConfig config, ManualLogSource logger, FreeFlyNotification notification)
     {
         _config = config;
         _logger = logger;
+        _notification = notification;
     }
 
     public void SetCapabilities(PatchCapabilities capabilities) => _capabilities = capabilities;
@@ -227,7 +229,7 @@ internal sealed class FreeFlyController
     public void Shutdown()
     {
         CloseMenu();
-        StopFlight("plugin destroyed");
+        StopFlight("plugin destroyed", notify: false);
         DisposeControllerActions();
     }
 
@@ -360,10 +362,11 @@ internal sealed class FreeFlyController
 
         local.refs.ragdoll.ToggleCollision(false);
         _flightActive = true;
+        _notification.Show("Free flight enabled");
         _logger.LogInfo("Free flight enabled.");
     }
 
-    private void StopFlight(string reason)
+    private void StopFlight(string reason, bool notify = true)
     {
         if (!_flightActive && _flightCharacter == null)
             return;
@@ -385,7 +388,11 @@ internal sealed class FreeFlyController
         bool wasActive = _flightActive;
         _flightActive = false;
         if (wasActive)
+        {
+            if (notify)
+                _notification.Show("Free flight disabled");
             _logger.LogDebug($"Free flight disabled: {reason}.");
+        }
     }
 
     private bool IsUsable(Character character)

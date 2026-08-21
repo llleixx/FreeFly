@@ -11,6 +11,7 @@ public sealed class Plugin : BaseUnityPlugin
 
     internal static Plugin? Instance { get; private set; }
     internal FreeFlyController Controller { get; private set; } = null!;
+    private FreeFlyNotification? _notification;
 
     private Harmony? _harmony;
 
@@ -18,7 +19,8 @@ public sealed class Plugin : BaseUnityPlugin
     {
         Instance = this;
         ModConfig config = new(Config);
-        Controller = new FreeFlyController(config, Logger);
+        _notification = gameObject.AddComponent<FreeFlyNotification>();
+        Controller = new FreeFlyController(config, Logger, _notification);
         _harmony = new Harmony(PluginGuid);
 
         PatchCapabilities capabilities = PatchInstaller.Install(_harmony, Logger);
