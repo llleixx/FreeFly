@@ -20,7 +20,11 @@ public sealed class Plugin : BaseUnityPlugin
         Instance = this;
         ModConfig config = new(Config);
         _notification = gameObject.AddComponent<FreeFlyNotification>();
-        Controller = new FreeFlyController(config, Logger, _notification);
+        FreeFlyInput input = new(config, Logger);
+        FlightRuntime flight = new(config, Logger, input, _notification);
+        TeleportDestinationService destinations = new(config, Logger);
+        TeleportMenuView menu = new(destinations);
+        Controller = new FreeFlyController(config, input, flight, destinations, menu);
         _harmony = new Harmony(PluginGuid);
 
         PatchCapabilities capabilities = PatchInstaller.Install(_harmony, Logger);

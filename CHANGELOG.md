@@ -1,5 +1,15 @@
 # Changelog
 
+All notable changes to FreeFly are documented here.
+
+## 1.1.0 - 2026-08-22
+
+- Added on-screen notifications when free flight is enabled or disabled.
+- Refactored input, flight runtime, teleport destinations, and the teleport menu into separate modules.
+- Improved flight cleanup by restoring the original gravity and collider states.
+- Reduced teleport menu refresh and GUI allocation overhead while keeping destinations updated during generation.
+- Added validation and complete archive contents to the Thunderstore packaging script.
+
 ## 1.0.0
 
 - Added local no-clip flight with PEAK's native movement, look, jump, and crouch inputs.

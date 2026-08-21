@@ -17,5 +17,5 @@ internal static class FreeFlyMath
         return baseSpeed * multiplier;
     }
 
-    private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
+    public static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 }
