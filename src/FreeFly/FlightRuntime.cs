@@ -126,12 +126,14 @@ internal sealed class FlightRuntime
         Vector3 right = local.data.lookDirection_Right;
         Vector3 direction = forward * input.y + right * input.x;
         bool modifierHeld = _input.ChordModifierHeld();
+        bool crouchHeld = _input.IsCrouchHeld(local, menuOpen) ||
+                          CharacterInput.action_crouchToggle?.IsPressed() == true;
         float vertical = modifierHeld
             ? 0f
             : (_input.IsJumpHeld(local, menuOpen) ? 1f : 0f);
         vertical -= modifierHeld
             ? 0f
-            : (_input.IsCrouchHeld(local, menuOpen) ? 1f : 0f);
+            : (crouchHeld ? 1f : 0f);
         direction += Vector3.up * vertical;
         direction = Vector3.ClampMagnitude(direction, 1f);
 
