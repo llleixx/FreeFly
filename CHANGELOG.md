@@ -4,8 +4,7 @@ All notable changes to FreeFly are documented here.
 
 ## 1.1.1 - 2026-08-23
 
-- Fixed controller crouch input during flight by supporting PEAK's `CrouchToggle` action as a held descend input.
-- Restored consistent press-and-hold vertical movement across keyboard and controller inputs.
+- Fixed descending with the controller crouch button during free flight.
 
 ## 1.1.0 - 2026-08-22
 
