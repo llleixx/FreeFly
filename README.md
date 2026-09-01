@@ -69,17 +69,17 @@ The config file is generated at `BepInEx/config/com.github.lllei.FreeFly.cfg`.
 | `Controls.Controller Chord Modifier Path` | `<Gamepad>/select` | Unity Input System path, or empty |
 | `Controls.Controller Flight Toggle Path` | `<Gamepad>/leftShoulder` | Unity Input System path, or empty |
 | `Controls.Controller Teleport Menu Toggle Path` | `<Gamepad>/rightShoulder` | Unity Input System path, or empty |
-| `Controls.Speed Up Keyboard Path` | `<Keyboard>/leftShift` | Unity Input System path, or empty/`None` |
-| `Controls.Slow Down Keyboard Path` | `<Keyboard>/leftAlt` | Unity Input System path, or empty/`None` |
-| `Controls.Speed Up Controller Path` | `<Gamepad>/rightShoulder` | Unity Input System path, or empty/`None` |
-| `Controls.Slow Down Controller Path` | `<Gamepad>/leftShoulder` | Unity Input System path, or empty/`None` |
+| `Controls.Speed Up Keyboard Path` | `<Keyboard>/leftShift` | Unity Input System path, or empty |
+| `Controls.Slow Down Keyboard Path` | `<Keyboard>/leftAlt` | Unity Input System path, or empty |
+| `Controls.Speed Up Controller Path` | `<Gamepad>/rightShoulder` | Unity Input System path, or empty |
+| `Controls.Slow Down Controller Path` | `<Gamepad>/leftShoulder` | Unity Input System path, or empty |
 | `Movement.Base Speed` | `100` m/s | `1` to `1000` |
 | `Movement.Speed Up Multiplier` | `2.0` | `1` to `10` |
 | `Movement.Slow Down Multiplier` | `0.2` | `0.05` to `1` |
 | `Teleport.Vertical Offset` | `2` m | `0` to `10` |
 | `Teleport.Backward Offset` | `1.5` m | `0` to `10` |
 
-Keyboard and controller bindings use Unity Input System control paths. Keyboard paths can target controls such as `<Keyboard>/f6`, `<Keyboard>/leftShift`, or `<Mouse>/middleButton`. With PEAKModding ModConfig installed, the controller path entries provide a dropdown of common Gamepad paths. Common paths include `<Gamepad>/select` (View/Share), `<Gamepad>/start` (Menu/Options), `<Gamepad>/leftShoulder` (LB/L1), `<Gamepad>/rightShoulder` (RB/R1), and `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth` (A/Cross / B/Circle / X/Square / Y/Triangle). These semantic paths require a device recognized as `Gamepad`.
+Keyboard and controller bindings use unrestricted Unity Input System control paths. Keyboard paths can target controls such as `<Keyboard>/f6`, `<Keyboard>/leftShift`, or `<Mouse>/middleButton`. Common Gamepad paths include `<Gamepad>/select` (View/Share), `<Gamepad>/start` (Menu/Options), `<Gamepad>/leftShoulder` (LB/L1), `<Gamepad>/rightShoulder` (RB/R1), and `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth` (A/Cross / B/Circle / X/Square / Y/Triangle). These semantic paths require a device recognized as `Gamepad`.
 
 Leave the modifier path empty to make the flight and teleport actions standalone buttons; leave an action path empty to disable that shortcut. Invalid numeric values are clamped or replaced with safe defaults at runtime.
 
@@ -158,17 +158,17 @@ FreeFly 是我按照自己的游玩习惯实现的飞行模组。[FlyMode](https
 | `Controls.Controller Chord Modifier Path` | `<Gamepad>/select` | Unity Input System 路径，或留空 |
 | `Controls.Controller Flight Toggle Path` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空 |
 | `Controls.Controller Teleport Menu Toggle Path` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空 |
-| `Controls.Speed Up Keyboard Path` | `<Keyboard>/leftShift` | Unity Input System 路径，或留空/`None` |
-| `Controls.Slow Down Keyboard Path` | `<Keyboard>/leftAlt` | Unity Input System 路径，或留空/`None` |
-| `Controls.Speed Up Controller Path` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空/`None` |
-| `Controls.Slow Down Controller Path` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空/`None` |
+| `Controls.Speed Up Keyboard Path` | `<Keyboard>/leftShift` | Unity Input System 路径，或留空 |
+| `Controls.Slow Down Keyboard Path` | `<Keyboard>/leftAlt` | Unity Input System 路径，或留空 |
+| `Controls.Speed Up Controller Path` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空 |
+| `Controls.Slow Down Controller Path` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空 |
 | `Movement.Base Speed` | `100` m/s | `1` 到 `1000` |
 | `Movement.Speed Up Multiplier` | `2.0` | `1` 到 `10` |
 | `Movement.Slow Down Multiplier` | `0.2` | `0.05` 到 `1` |
 | `Teleport.Vertical Offset` | `2` m | `0` 到 `10` |
 | `Teleport.Backward Offset` | `1.5` m | `0` 到 `10` |
 
-键盘与手柄绑定均使用 Unity Input System control path，例如 `<Keyboard>/f6`、`<Keyboard>/leftShift` 或 `<Mouse>/middleButton`。安装 PEAKModding ModConfig 后，手柄路径配置项会提供常见 Gamepad 路径下拉框。常见路径包括 `<Gamepad>/select`（View/Share）、`<Gamepad>/start`（Menu/Options）、`<Gamepad>/leftShoulder`（LB/L1）、`<Gamepad>/rightShoulder`（RB/R1），以及 `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth`（A/Cross / B/Circle / X/Square / Y/Triangle）。这些语义化路径要求设备被识别为 `Gamepad`。
+键盘与手柄绑定均使用不受下拉选项限制的 Unity Input System control path，例如 `<Keyboard>/f6`、`<Keyboard>/leftShift` 或 `<Mouse>/middleButton`。常见手柄路径包括 `<Gamepad>/select`（View/Share）、`<Gamepad>/start`（Menu/Options）、`<Gamepad>/leftShoulder`（LB/L1）、`<Gamepad>/rightShoulder`（RB/R1），以及 `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth`（A/Cross / B/Circle / X/Square / Y/Triangle）。这些语义化路径要求设备被识别为 `Gamepad`。
 
 将组合键修饰键路径留空可将飞行和传送改为独立按键；将动作路径留空可禁用对应快捷键。非法数值会在运行时钳制或回退到安全默认值。
 

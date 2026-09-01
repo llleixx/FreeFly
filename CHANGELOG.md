@@ -2,6 +2,11 @@
 
 All notable changes to FreeFly are documented here.
 
+## 1.3.0 - 2026-09-01
+
+- Removed the preset controller-path dropdowns so all keyboard and controller bindings accept unrestricted Unity Input System paths.
+- Standardized empty paths as the only documented way to disable an input binding.
+
 ## 1.2.0 - 2026-09-01
 
 - Replaced legacy `KeyCode` keyboard bindings and menu input polling with Unity Input System actions and configurable keyboard control paths.

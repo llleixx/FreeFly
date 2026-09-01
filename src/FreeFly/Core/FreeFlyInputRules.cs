@@ -4,10 +4,7 @@ internal static class FreeFlyInputRules
 {
     public static string NormalizeBindingPath(string? path)
     {
-        string normalized = path?.Trim() ?? string.Empty;
-        return string.Equals(normalized, "None", System.StringComparison.OrdinalIgnoreCase)
-            ? string.Empty
-            : normalized;
+        return path?.Trim() ?? string.Empty;
     }
 
     public static int ClampSelection(int selectedIndex, int optionCount)

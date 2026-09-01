@@ -29,8 +29,8 @@ public sealed class FreeFlyMathTests
 
     [TestCase(null, "")]
     [TestCase("  <Gamepad>/leftShoulder  ", "<Gamepad>/leftShoulder")]
-    [TestCase("None", "")]
-    [TestCase(" none ", "")]
+    [TestCase("  <Keyboard>/f6  ", "<Keyboard>/f6")]
+    [TestCase("None", "None")]
     public void BindingPathsAreNormalized(string? path, string expected)
     {
         Assert.That(FreeFlyInputRules.NormalizeBindingPath(path), Is.EqualTo(expected));

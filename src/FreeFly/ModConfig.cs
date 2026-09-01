@@ -5,27 +5,6 @@ namespace FreeFly;
 
 internal sealed class ModConfig
 {
-    private static readonly string[] ControllerPathOptions =
-    [
-        "<Gamepad>/select",
-        "<Gamepad>/start",
-        "<Gamepad>/leftShoulder",
-        "<Gamepad>/rightShoulder",
-        "<Gamepad>/buttonSouth",
-        "<Gamepad>/buttonEast",
-        "<Gamepad>/buttonWest",
-        "<Gamepad>/buttonNorth",
-        "<Gamepad>/leftTrigger",
-        "<Gamepad>/rightTrigger",
-        "<Gamepad>/leftStickPress",
-        "<Gamepad>/rightStickPress",
-        "<Gamepad>/dpad/up",
-        "<Gamepad>/dpad/down",
-        "<Gamepad>/dpad/left",
-        "<Gamepad>/dpad/right",
-        ""
-    ];
-
     private const float DefaultBaseSpeed = 100f;
     private const float DefaultSpeedUpMultiplier = 2f;
     private const float DefaultSlowDownMultiplier = 0.2f;
@@ -42,26 +21,21 @@ internal sealed class ModConfig
             "Unity Input System control path used to open the teammate teleport menu with a keyboard. Leave empty to disable.");
         ControllerChordModifierPath = config.Bind("Controls", "Controller Chord Modifier Path",
             "<Gamepad>/select",
-            new ConfigDescription("Controller button held as the optional modifier for the flight and teleport menu shortcuts. Leave empty for single-button mode. Common paths: <Gamepad>/select = View/Share; <Gamepad>/start = Menu/Options; <Gamepad>/leftShoulder = LB/L1; <Gamepad>/rightShoulder = RB/R1; <Gamepad>/buttonSouth = A/Cross; <Gamepad>/buttonEast = B/Circle; <Gamepad>/buttonWest = X/Square; <Gamepad>/buttonNorth = Y/Triangle; <Gamepad>/leftTrigger = LT/L2; <Gamepad>/rightTrigger = RT/R2; <Gamepad>/leftStickPress and <Gamepad>/rightStickPress; <Gamepad>/dpad/up, <Gamepad>/dpad/down, <Gamepad>/dpad/left, and <Gamepad>/dpad/right. These semantic paths require a device recognized as Gamepad.",
-                new AcceptableValueList<string>(ControllerPathOptions)));
+            "Controller button held as the optional modifier for the flight and teleport menu shortcuts. Leave empty for single-button mode. Common paths: <Gamepad>/select = View/Share; <Gamepad>/start = Menu/Options; <Gamepad>/leftShoulder = LB/L1; <Gamepad>/rightShoulder = RB/R1; <Gamepad>/buttonSouth = A/Cross; <Gamepad>/buttonEast = B/Circle; <Gamepad>/buttonWest = X/Square; <Gamepad>/buttonNorth = Y/Triangle; <Gamepad>/leftTrigger = LT/L2; <Gamepad>/rightTrigger = RT/R2; <Gamepad>/leftStickPress and <Gamepad>/rightStickPress; <Gamepad>/dpad/up, <Gamepad>/dpad/down, <Gamepad>/dpad/left, and <Gamepad>/dpad/right. These semantic paths require a device recognized as Gamepad.");
         ControllerFlightTogglePath = config.Bind("Controls", "Controller Flight Toggle Path",
             "<Gamepad>/leftShoulder",
-            new ConfigDescription("Controller button pressed with the optional modifier to toggle free flight. Default: <Gamepad>/leftShoulder (Xbox LB / PlayStation L1). Leave empty to disable.",
-                new AcceptableValueList<string>(ControllerPathOptions)));
+            "Controller button pressed with the optional modifier to toggle free flight. Default: <Gamepad>/leftShoulder (Xbox LB / PlayStation L1). Leave empty to disable.");
         ControllerTeleportMenuTogglePath = config.Bind("Controls", "Controller Teleport Menu Toggle Path",
             "<Gamepad>/rightShoulder",
-            new ConfigDescription("Controller button pressed with the optional modifier to toggle the teleport menu. Default: <Gamepad>/rightShoulder (Xbox RB / PlayStation R1). Leave empty to disable.",
-                new AcceptableValueList<string>(ControllerPathOptions)));
+            "Controller button pressed with the optional modifier to toggle the teleport menu. Default: <Gamepad>/rightShoulder (Xbox RB / PlayStation R1). Leave empty to disable.");
         SpeedUpKeyboardPath = config.Bind("Controls", "Speed Up Keyboard Path", "<Keyboard>/leftShift",
-            "Unity Input System control path held to temporarily increase flight speed with a keyboard. Leave empty or set to None to disable.");
+            "Unity Input System control path held to temporarily increase flight speed with a keyboard. Leave empty to disable.");
         SlowDownKeyboardPath = config.Bind("Controls", "Slow Down Keyboard Path", "<Keyboard>/leftAlt",
-            "Unity Input System control path held to temporarily decrease flight speed with a keyboard. Leave empty or set to None to disable.");
+            "Unity Input System control path held to temporarily decrease flight speed with a keyboard. Leave empty to disable.");
         SpeedUpControllerPath = config.Bind("Controls", "Speed Up Controller Path", "<Gamepad>/rightShoulder",
-            new ConfigDescription("Unity Input System path held to temporarily increase flight speed. Default: <Gamepad>/rightShoulder (Xbox RB / PlayStation R1). Leave empty or set to None to disable.",
-                new AcceptableValueList<string>(ControllerPathOptions)));
+            "Unity Input System path held to temporarily increase flight speed. Default: <Gamepad>/rightShoulder (Xbox RB / PlayStation R1). Leave empty to disable.");
         SlowDownControllerPath = config.Bind("Controls", "Slow Down Controller Path", "<Gamepad>/leftShoulder",
-            new ConfigDescription("Unity Input System path held to temporarily decrease flight speed. Default: <Gamepad>/leftShoulder (Xbox LB / PlayStation L1). Leave empty or set to None to disable.",
-                new AcceptableValueList<string>(ControllerPathOptions)));
+            "Unity Input System path held to temporarily decrease flight speed. Default: <Gamepad>/leftShoulder (Xbox LB / PlayStation L1). Leave empty to disable.");
         BaseSpeed = config.Bind("Movement", "Base Speed", DefaultBaseSpeed,
             new ConfigDescription("Base flight speed in meters per second.",
                 new AcceptableValueRange<float>(1f, 1000f)));
