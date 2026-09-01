@@ -2,6 +2,11 @@
 
 All notable changes to FreeFly are documented here.
 
+## 1.2.0 - 2026-09-01
+
+- Replaced legacy `KeyCode` keyboard bindings and menu input polling with Unity Input System actions and configurable keyboard control paths.
+- Changed all multi-word configuration entry names to use spaces for improved readability.
+
 ## 1.1.2 - 2026-08-25
 
 - Improved controller shortcut compatibility across common Xbox and PlayStation layouts.

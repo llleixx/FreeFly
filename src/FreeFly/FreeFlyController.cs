@@ -33,8 +33,6 @@ internal sealed class FreeFlyController
 
     public void TickUpdate()
     {
-        _input.EnsureActions();
-
         Character? local = Character.localCharacter;
         if (!_config.Enabled.Value || !_capabilities.FlightPatch || local == null || local.data == null)
         {
