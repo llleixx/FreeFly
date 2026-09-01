@@ -2,6 +2,12 @@
 
 All notable changes to FreeFly are documented here.
 
+## 1.1.2 - 2026-08-25
+
+- Improved controller shortcut compatibility across common Xbox and PlayStation layouts.
+- Corrected the default controller View/Share binding.
+- Added common Gamepad controller paths to the in-game configuration dropdown.
+
 ## 1.1.1 - 2026-08-23
 
 - Fixed descending with the controller crouch button during free flight.

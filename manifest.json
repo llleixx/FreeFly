@@ -1,6 +1,6 @@
 {
   "name": "FreeFly",
-  "version_number": "1.1.1",
+  "version_number": "1.1.2",
   "website_url": "https://github.com/llleixx/FreeFly",
   "description": "FreeFly adds local no-clip flight to PEAK, with temporary speed control and a stage-aware teleport menu for finding teammates or reaching stage destinations.",
   "dependencies": [

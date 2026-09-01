@@ -66,7 +66,7 @@ The config file is generated at `BepInEx/config/com.github.lllei.FreeFly.cfg`.
 | `General.Enabled` | `true` | boolean |
 | `Controls.ToggleFlightShortcut` | `F6` | keyboard key |
 | `Controls.TeleportMenuShortcut` | `F7` | keyboard key |
-| `Controls.ControllerChordModifierPath` | `<Gamepad>/selectButton` | Unity Input System path, or empty |
+| `Controls.ControllerChordModifierPath` | `<Gamepad>/select` | Unity Input System path, or empty |
 | `Controls.ControllerFlightTogglePath` | `<Gamepad>/leftShoulder` | Unity Input System path, or empty |
 | `Controls.ControllerTeleportMenuTogglePath` | `<Gamepad>/rightShoulder` | Unity Input System path, or empty |
 | `Controls.SpeedUpShortcut` | `LeftShift` | keyboard key, or `None` |
@@ -79,7 +79,9 @@ The config file is generated at `BepInEx/config/com.github.lllei.FreeFly.cfg`.
 | `Teleport.VerticalOffset` | `2` m | `0` to `10` |
 | `Teleport.BackwardOffset` | `1.5` m | `0` to `10` |
 
-Controller paths are Unity Input System paths. Leave the modifier path empty to make the flight and teleport actions standalone buttons; leave an action path empty to disable that shortcut. Invalid numeric values are clamped or replaced with safe defaults at runtime.
+Controller paths are Unity Input System paths. With PEAKModding ModConfig installed, the controller path entries provide a dropdown of common Gamepad paths. Common paths include `<Gamepad>/select` (View/Share), `<Gamepad>/start` (Menu/Options), `<Gamepad>/leftShoulder` (LB/L1), `<Gamepad>/rightShoulder` (RB/R1), and `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth` (A/Cross / B/Circle / X/Square / Y/Triangle). These semantic paths require a device recognized as `Gamepad`.
+
+Leave the modifier path empty to make the flight and teleport actions standalone buttons; leave an action path empty to disable that shortcut. Invalid numeric values are clamped or replaced with safe defaults at runtime.
 
 ### Compatibility notes
 
@@ -153,7 +155,7 @@ FreeFly 是我按照自己的游玩习惯实现的飞行模组。[FlyMode](https
 | `General.Enabled` | `true` | 布尔值 |
 | `Controls.ToggleFlightShortcut` | `F6` | 键盘按键 |
 | `Controls.TeleportMenuShortcut` | `F7` | 键盘按键 |
-| `Controls.ControllerChordModifierPath` | `<Gamepad>/selectButton` | Unity Input System 路径，或留空 |
+| `Controls.ControllerChordModifierPath` | `<Gamepad>/select` | Unity Input System 路径，或留空 |
 | `Controls.ControllerFlightTogglePath` | `<Gamepad>/leftShoulder` | Unity Input System 路径，或留空 |
 | `Controls.ControllerTeleportMenuTogglePath` | `<Gamepad>/rightShoulder` | Unity Input System 路径，或留空 |
 | `Controls.SpeedUpShortcut` | `LeftShift` | 键盘按键，或 `None` |
@@ -166,7 +168,9 @@ FreeFly 是我按照自己的游玩习惯实现的飞行模组。[FlyMode](https
 | `Teleport.VerticalOffset` | `2` m | `0` 到 `10` |
 | `Teleport.BackwardOffset` | `1.5` m | `0` 到 `10` |
 
-手柄路径使用 Unity Input System 格式。将组合键修饰键路径留空可将飞行和传送改为独立按键；将动作路径留空可禁用对应快捷键。非法数值会在运行时钳制或回退到安全默认值。
+手柄路径使用 Unity Input System 格式。安装 PEAKModding ModConfig 后，手柄路径配置项会提供常见 Gamepad 路径下拉框。常见路径包括 `<Gamepad>/select`（View/Share）、`<Gamepad>/start`（Menu/Options）、`<Gamepad>/leftShoulder`（LB/L1）、`<Gamepad>/rightShoulder`（RB/R1），以及 `<Gamepad>/buttonSouth` / `<Gamepad>/buttonEast` / `<Gamepad>/buttonWest` / `<Gamepad>/buttonNorth`（A/Cross / B/Circle / X/Square / Y/Triangle）。这些语义化路径要求设备被识别为 `Gamepad`。
+
+将组合键修饰键路径留空可将飞行和传送改为独立按键；将动作路径留空可禁用对应快捷键。非法数值会在运行时钳制或回退到安全默认值。
 
 ### 兼容性说明
 

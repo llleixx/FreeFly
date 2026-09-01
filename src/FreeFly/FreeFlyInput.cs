@@ -174,9 +174,9 @@ internal sealed class FreeFlyInput : IDisposable
             }
             else
             {
-                action.AddCompositeBinding("ButtonWithOneModifier")
+                action.AddCompositeBinding("OneModifier")
                     .With("modifier", modifierPath)
-                    .With("button", actionPath);
+                    .With("binding", actionPath);
             }
 
             action.Enable();
