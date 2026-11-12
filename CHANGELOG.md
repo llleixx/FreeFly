@@ -2,6 +2,11 @@
 
 All notable changes to FreeFly are documented here.
 
+## Unreleased
+
+- Add host-only player summoning and group teleports via right-click/controller X, plus `Bring all players to me`.
+- Fix self-teleport for non-hosts on current PEAK.
+
 ## 1.3.0 - 2026-09-01
 
 - Removed the preset controller-path dropdowns so all keyboard and controller bindings accept unrestricted Unity Input System paths.

@@ -7,7 +7,6 @@ internal sealed class FreeFlyController
     private readonly ModConfig _config;
     private readonly FreeFlyInput _input;
     private readonly FlightRuntime _flight;
-    private readonly TeleportDestinationService _destinations;
     private readonly TeleportMenuView _menu;
     private PatchCapabilities _capabilities;
 
@@ -15,20 +14,17 @@ internal sealed class FreeFlyController
         ModConfig config,
         FreeFlyInput input,
         FlightRuntime flight,
-        TeleportDestinationService destinations,
         TeleportMenuView menu)
     {
         _config = config;
         _input = input;
         _flight = flight;
-        _destinations = destinations;
         _menu = menu;
     }
 
     public void SetCapabilities(PatchCapabilities capabilities)
     {
         _capabilities = capabilities;
-        _destinations.SetCapabilities(capabilities);
     }
 
     public void TickUpdate()

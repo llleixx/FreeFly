@@ -22,6 +22,7 @@ FreeFly adds local no-clip flight to PEAK, with temporary speed control and a st
 - **Keyboard and controller support:** Use configurable Unity Input System paths for both keyboard and controller input. Flight and teleport can use a modifier chord or standalone buttons.
 - **Stage-aware teleport destinations:** The menu tracks the current stage's start and end points, campfires, the Nadir route, and the final PEAK destination. Destinations are refreshed as the run advances.
 - **Teleport to teammates:** Select living, passed-out, or dead teammates.
+- **Summon and group teleport (host only):** Bring teammates to you or send everyone to a location.
 
 ### Why FreeFly?
 
@@ -55,7 +56,15 @@ Install with Thunderstore Mod Manager or r2modman, or place `FreeFly.dll` direct
 
 In the teleport menu, use Up/Down or the D-pad to select a destination, Enter/`A` to teleport, and Escape/`B` to cancel.
 
-For normal stages, the menu shows the current stage start (the initial spawn or previous campfire) and its end campfire. Newly advanced destinations stay disabled while PEAK generates the segment. The Nadir exposes its spawn, Scoutmaster Soul waypoint, and The Gate as they become relevant; the final stage targets PEAK's summit flare location. Selecting any destination places the local player slightly above and behind it using configurable offsets.
+| Menu option | Left-click / Enter / A | Right-click / X (PlayStation □) |
+|---|---|---|
+| Player | Teleport yourself to that player | Bring that player to you |
+| Location | Teleport yourself there | Send everyone there, including yourself |
+| `Bring all players to me` | Bring the other players to you | Same as left-click |
+
+Moving other players requires the host. Other room members can still teleport themselves.
+
+For normal stages, the menu shows the current stage start (the initial spawn or previous campfire) and its end campfire. The Nadir exposes its spawn, Scoutmaster Soul waypoint, and The Gate as they become relevant; the final stage targets PEAK's summit flare location. Selecting any destination places the local player slightly above and behind it using configurable offsets.
 
 ### Configuration
 
@@ -111,6 +120,7 @@ FreeFly 为 PEAK 增加本地无碰撞飞行、临时速度控制和按关卡管
 - **支持键盘和手柄：** 键盘与手柄输入均使用可配置的 Unity Input System 路径；飞行和传送可以使用组合键，也可以使用独立按键。
 - **按关卡管理传送目的地：** 菜单会跟踪当前关卡的起点和终点、篝火、Nadir 路线以及最终 PEAK 目的地，并随着流程推进刷新目的地。
 - **传送到队友：** 可选择存活、昏迷或死亡的队友。
+- **召集与全员传送（仅房主）：** 将队友传送到自己，或将所有玩家传送到指定地点。
 
 ### 为什么做 FreeFly
 
@@ -144,7 +154,15 @@ FreeFly 是我按照自己的游玩习惯实现的飞行模组。[FlyMode](https
 
 在传送菜单中，使用上/下方向键或十字键选择目的地，回车键/`A` 确认传送，Escape/`B` 取消。
 
-普通关卡会显示当前关卡起点（初始出生点或上一处篝火）和终点篝火。新推进的目的地会在 PEAK 生成对应路段时保持禁用。Nadir 会在相关节点出现时显示出生点、Scoutmaster Soul 路标和 The Gate；最终关卡则指向 PEAK 山顶的信号弹位置。选择目的地后，本地玩家会根据可配置偏移出现在目的地的上方和后方。
+| 菜单选项 | 左键／Enter／A | 右键／X（PlayStation □） |
+|---|---|---|
+| 玩家 | 自己传送到该玩家 | 将该玩家传送到自己 |
+| 地点 | 自己传送过去 | 将所有玩家（包括自己）传送过去 |
+| `Bring all players to me` | 将其他玩家传送到自己 | 同左键 |
+
+传送他人仅限房主。普通房员仍可自行传送。
+
+普通关卡会显示当前关卡起点（初始出生点或上一处篝火）和终点篝火。Nadir 会在相关节点出现时显示出生点、Scoutmaster Soul 路标和 The Gate；最终关卡则指向 PEAK 山顶的信号弹位置。选择目的地后，本地玩家会根据可配置偏移出现在目的地的上方和后方。
 
 ### 配置
 

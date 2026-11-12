@@ -1,38 +1,17 @@
 using System;
 using System.Collections.Generic;
 using BepInEx.Logging;
-using Photon.Pun;
-using FreeFly.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace FreeFly;
 
-internal readonly struct TeleportOption
-{
-    public TeleportOption(string label, Vector3 position, Transform? anchor, Character? character, bool enabled = true)
-    {
-        Label = label;
-        Position = position;
-        Anchor = anchor;
-        Character = character;
-        Enabled = enabled;
-    }
-
-    public string Label { get; }
-    public Vector3 Position { get; }
-    public Transform? Anchor { get; }
-    public Character? Character { get; }
-    public bool Enabled { get; }
-}
-
 internal sealed class TeleportDestinationService
 {
     private const float RefreshInterval = 0.5f;
 
-    private readonly ModConfig _config;
     private readonly ManualLogSource _logger;
-    private readonly List<TeleportOption> _options = new();
+    private readonly List<TeleportMenuEntry> _options = new();
     private Transform? _cachedPeakFlareDestination;
     private Transform? _cachedPeakPortalDestination;
     private Transform? _cachedSoulPillarDestination;
@@ -43,17 +22,13 @@ internal sealed class TeleportDestinationService
     private int _cachedSceneHandle = int.MinValue;
     private Segment? _cachedSegment;
     private bool _hasCachedSegment;
-    private PatchCapabilities _capabilities;
 
-    public TeleportDestinationService(ModConfig config, ManualLogSource logger)
+    public TeleportDestinationService(ManualLogSource logger)
     {
-        _config = config;
         _logger = logger;
     }
 
-    public IReadOnlyList<TeleportOption> Options => _options;
-
-    public void SetCapabilities(PatchCapabilities capabilities) => _capabilities = capabilities;
+    public IReadOnlyList<TeleportMenuEntry> Options => _options;
 
     public void RefreshIfNeeded(bool force = false)
     {
@@ -63,38 +38,6 @@ internal sealed class TeleportDestinationService
 
         _nextRefreshTime = Time.unscaledTime + RefreshInterval;
         RefreshTargets();
-    }
-
-    public bool TryTeleport(int selectedIndex)
-    {
-        Character? local = Character.localCharacter;
-        if (!_capabilities.TeleportPatch || local == null || !FreeFlyCharacterUtils.IsUsable(local) || local.warping ||
-            selectedIndex < 0 || selectedIndex >= _options.Count)
-            return false;
-
-        TeleportOption option = _options[selectedIndex];
-        if (!option.Enabled)
-            return false;
-
-        Vector3 position = option.Position;
-        Vector3 forward = option.Anchor != null ? option.Anchor.forward : Vector3.forward;
-        if (option.Character != null)
-        {
-            Character target = option.Character;
-            if (target == null || target.data == null || target.transform == null)
-                return false;
-
-            position = target.data.dead ? target.GetSpectatePosition() : target.Center;
-            forward = target.transform.forward;
-        }
-
-        position += Vector3.up * _config.SafeTeleportVerticalOffset;
-        position -= forward * _config.SafeTeleportBackwardOffset;
-        if (!FreeFlyCharacterUtils.IsFinite(position))
-            return false;
-
-        local.photonView.RPC("WarpPlayerRPC", RpcTarget.All, position, true);
-        return true;
     }
 
     private void ObserveWorld()
@@ -148,9 +91,11 @@ internal sealed class TeleportDestinationService
             _logger.LogDebug($"Stage teleport destinations are not ready: {exception.Message}");
         }
 
+        _options.Add(TeleportMenuEntry.BringAll);
+
         try
         {
-            List<TeleportOption> teammateOptions = new();
+            List<TeleportMenuEntry> teammateOptions = new();
             var players = PlayerHandler.GetAllPlayerCharacters();
             if (players != null)
             {
@@ -160,11 +105,8 @@ internal sealed class TeleportDestinationService
                         continue;
 
                     string state = target.data.dead ? "Dead" : target.data.fullyPassedOut ? "Passed out" : "Alive";
-                    teammateOptions.Add(new TeleportOption(
-                        $"Teammate: {target.characterName} [{state}]",
-                        Vector3.zero,
-                        null,
-                        target));
+                    teammateOptions.Add(TeleportMenuEntry.ForPlayer(target,
+                        $"Teammate: {target.characterName} [{state}]"));
                 }
             }
 
@@ -326,7 +268,7 @@ internal sealed class TeleportDestinationService
     private void AddStageDestination(string label, Vector3 position, Transform anchor, bool enabled = true)
     {
         if (FreeFlyCharacterUtils.IsFinite(position))
-            _options.Add(new TeleportOption(label, position, anchor, null, enabled));
+            _options.Add(TeleportMenuEntry.ForLocation(label, position, anchor, enabled));
     }
 
     private static bool IsStageGenerated(Segment segment)

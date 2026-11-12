@@ -14,7 +14,8 @@ internal readonly struct FreeFlyInputSnapshot
         bool cancel,
         bool confirm,
         bool up,
-        bool down)
+        bool down,
+        bool secondary = false)
     {
         MenuToggle = menuToggle;
         FlightToggle = flightToggle;
@@ -22,6 +23,7 @@ internal readonly struct FreeFlyInputSnapshot
         Confirm = confirm;
         Up = up;
         Down = down;
+        Secondary = secondary;
     }
 
     public bool MenuToggle { get; }
@@ -30,6 +32,7 @@ internal readonly struct FreeFlyInputSnapshot
     public bool Confirm { get; }
     public bool Up { get; }
     public bool Down { get; }
+    public bool Secondary { get; }
 }
 
 internal sealed class FreeFlyInput : IDisposable
@@ -45,6 +48,7 @@ internal sealed class FreeFlyInput : IDisposable
     private InputAction? _slowDownControllerAction;
     private InputAction? _cancelAction;
     private InputAction? _confirmAction;
+    private InputAction? _secondaryAction;
     private InputAction? _upAction;
     private InputAction? _downAction;
 
@@ -73,7 +77,8 @@ internal sealed class FreeFlyInput : IDisposable
             WasPressedThisFrame(_cancelAction),
             WasPressedThisFrame(_confirmAction),
             WasPressedThisFrame(_upAction),
-            WasPressedThisFrame(_downAction));
+            WasPressedThisFrame(_downAction),
+            WasPressedThisFrame(_secondaryAction));
     }
 
     public bool SpeedUpHeld() => IsActionHeld(_speedUpKeyboardAction) ||
@@ -127,6 +132,7 @@ internal sealed class FreeFlyInput : IDisposable
         DisposeConfiguredActions();
         DisposeAction(ref _cancelAction);
         DisposeAction(ref _confirmAction);
+        DisposeAction(ref _secondaryAction);
         DisposeAction(ref _upAction);
         DisposeAction(ref _downAction);
     }
@@ -172,6 +178,8 @@ internal sealed class FreeFlyInput : IDisposable
             "FreeFly Menu Cancel", "menu cancel", "<Keyboard>/escape", "<Gamepad>/buttonEast");
         _confirmAction = TryCreateButtonAction(
             "FreeFly Menu Confirm", "menu confirm", "<Keyboard>/enter", "<Gamepad>/buttonSouth");
+        _secondaryAction = TryCreateButtonAction(
+            "FreeFly Menu Secondary", "menu secondary", "<Gamepad>/buttonWest");
         _upAction = TryCreateButtonAction(
             "FreeFly Menu Up", "menu up", "<Keyboard>/upArrow", "<Gamepad>/dpad/up");
         _downAction = TryCreateButtonAction(

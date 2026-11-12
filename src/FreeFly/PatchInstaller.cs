@@ -28,9 +28,9 @@ internal static class PatchInstaller
             "CharacterMovement.FixedUpdate",
             logger);
 
-        bool teleport = AccessTools.Method(typeof(Character), "WarpPlayerRPC") != null;
+        bool teleport = TeleportExecutor.IsSupported;
         if (!teleport)
-            logger.LogError("PEAK's Character.WarpPlayerRPC was not found; teleport is disabled.");
+            logger.LogError("PEAK's Character.WarpPlayer or WarpPlayerRPC was not found; teleport is disabled.");
 
         return new PatchCapabilities(flight, teleport);
     }

@@ -6,7 +6,7 @@ internal static class FreeFlyCharacterUtils
 {
     public static bool IsUsable(Character character)
     {
-        return character == Character.localCharacter && character.data != null &&
+        return character == Character.localCharacter && character.data != null && character.refs != null &&
                character.refs.ragdoll != null && character.refs.view != null;
     }
 
