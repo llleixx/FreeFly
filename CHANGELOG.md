@@ -2,7 +2,7 @@
 
 All notable changes to FreeFly are documented here.
 
-## Unreleased
+## 1.4.0 - 2026-11-13
 
 - Add host-only player summoning and group teleports via right-click/controller X, plus `Bring all players to me`.
 - Fix self-teleport for non-hosts on current PEAK.
